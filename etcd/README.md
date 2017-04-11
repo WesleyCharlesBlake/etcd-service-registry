@@ -1,4 +1,4 @@
-Role Name
+Etcd Ansible role
 =========
 
 A brief description of the role goes here.
