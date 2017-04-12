@@ -1,5 +1,6 @@
 - hosts: etcd
-  remote_user: root
-  roles:
-  - etcd
 
+  roles:
+    - role: etcd
+      etcd_interface: enp0s8
+      become: true

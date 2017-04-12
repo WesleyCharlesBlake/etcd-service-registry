@@ -3,6 +3,7 @@
 - name: Download etcd
   get_url: url={{ etcd_download_url }}
            dest={{ etcd_download_dir }}/{{ etcd_download_filename }}
+  become: true
   when: not etcd_config_only|bool
 
 - name: Unarchive etcd
@@ -10,6 +11,7 @@
              src={{ etcd_download_dir }}/{{ etcd_download_filename }}
              dest={{ etcd_download_dir }}
              creates="{{ etcd_download_dir }}/{{ etcd_release }}/etcd"
+  become: true
   when: not etcd_config_only|bool
 
 - name: Copy binaries from archive into etcd dir
@@ -20,12 +22,14 @@
   with_items:
     - etcd
     - etcdctl
+  become: true
   when: not etcd_config_only|bool
 
-- name: Add etcd upstart service
-  template: src=etcd.conf.j2
-            dest=/etc/init/etcd.conf
+- name: Add etcd systemd service
+  template: src=etcd.service.j2
+            dest=/etc/systemd/system/etcd.service
             mode=0644
-  when: ansible_service_mgr == "upstart"
+  become: true
   notify:
+    - Reload systemd
     - Restart etcd

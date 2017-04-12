@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=etcd Daemon
+After=network.target
+
+[Service]
+Type=notify
+User={{ etcd_user }}
+ExecStart={{ etcd_cmd }} --initial-advertise-peer-urls {{ etcd_initial_advertise_peer_urls }} --advertise-client-urls {{ etcd_advertise_client_urls }} --listen-client-urls {{ etcd_listen_client_urls }},http://127.0.0.1:2379 --listen-peer-urls {{ etcd_listen_peer_urls }} --data-dir {{ etcd_data_dir }} --name {{ inventory_hostname }} --discovery https://discovery.etcd.io/ea062f25dd891a16d04a8b87867095fb
+Restart=always
+RestartSec=10s
+LimitNOFILE=40000
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target
