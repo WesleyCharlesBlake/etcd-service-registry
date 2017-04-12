@@ -1,9 +1,10 @@
 ---
-# handlers file for etcd
-- name: Reload systemd
-  command: systemctl daemon-reload
-
 - name: Restart etcd
   service: name=etcd
            state=restarted
            enabled=yes
+  become: true
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  become: true

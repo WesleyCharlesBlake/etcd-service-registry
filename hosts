@@ -1,4 +1,7 @@
 [etcd]
-172.16.20.1
-172.16.20.2
-172.16.20.3
+192.168.77.21
+192.168.77.22
+192.168.77.23
+
+[etcd:vars]
+ansible_python_interpreter=/usr/bin/python3
