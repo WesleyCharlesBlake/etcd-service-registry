@@ -1,3 +1,4 @@
 *.retry
 */.vagrant
 *.log
+node_modules
